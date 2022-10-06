@@ -4,13 +4,13 @@ from urllib import response
 extra = 10
 
 #Cartas especiales
-As = ["as", 10]
-jota = ["jota", 10]
-reina = ["reina", 10]
-rey = ["rey", 10]
+As = ["as", extra]
+jota = ["jota", extra]
+reina = ["reina", extra]
+rey = ["rey", extra]
 
 #Baraja
-baraja = [As, 2, 3, 4, 5, 6, 7, 8, 9, 10, jota, reina, rey]
+baraja = [As, 2, 3, 4, 5, 6, 7, 8, 9, extra, jota, reina, rey]
 
 #Composicion completa, 52 naipes
 barajaFrancesa = {
@@ -19,8 +19,6 @@ barajaFrancesa = {
     "corazon": baraja,
     "pica" : baraja
 }
-
-#print(barajaFrancesa)
 
 #Toma carta aleatoria de la baraja
 def barajaAleatoria():
@@ -71,18 +69,19 @@ def check(x):
 
 #Versus contra carta de crupier
 def versus(x, y):
-    if primeraCartaCrupier > reparto:
-        print("Perdiste")
-    elif primeraCartaCrupier < reparto:
-        print("Ganaste")
-    elif primeraCartaCrupier == reparto:
-        print("Empate")
+    if x >= y:
+        print(f"Perdiste, {x} es mayor que {y}")
+    elif x < y:
+        print(f"Ganaste, {x} es menor que {y}")
+    elif x == y:
+        print(f"Empate, {x} vs {y}")
 
 
 #Inicio - testeo
 
 primeraCarta = carteo()
 segundaCarta = carteo()
+
 if type(primeraCarta) == list:
     primeraCarta = primeraCarta[1]
 elif type(segundaCarta) == list:
@@ -90,9 +89,13 @@ elif type(segundaCarta) == list:
 reparto = primeraCarta+segundaCarta
 print(f"Tus cartas suman: {reparto}")
 primeraCartaCrupier = crupier()
+segundaCartaCrupier = crupier()
 if type(primeraCartaCrupier) == list:
     primeraCartaCrupier = primeraCartaCrupier[1]
+if type(segundaCartaCrupier) == list:
+    segundaCartaCrupier = segundaCartaCrupier[1]
 print(f"Primera carta del dealer: {primeraCartaCrupier}")
+totalCrupier = primeraCartaCrupier + segundaCartaCrupier
 
 while True:    
     c = pedir()
@@ -109,8 +112,7 @@ while True:
         continue
     else:
         break
-    
-versus(reparto, primeraCartaCrupier)   
+versus(totalCrupier, reparto)   
 
 
 
